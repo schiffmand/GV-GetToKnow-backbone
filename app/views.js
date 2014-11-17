@@ -46,11 +46,12 @@ var SplashView = Backbone.View.extend({
             url: 'http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(rssUrl),
             dataType: 'json',
             success: function(data) {
-                stories = _.first(data.responseData.feed.entries,3);
+                stories = _.first(data.responseData.feed.entries,4);
                 $('#gv-country').attr('disabled', false);
                 that.updateOneStory(stories[0], '#gv-story-1');
                 that.updateOneStory(stories[1], '#gv-story-2');
                 that.updateOneStory(stories[2], '#gv-story-3');
+                that.updateOneStory(stories[2], '#gv-story-4');
                 $('#gv-loading').hide();
                 $('.gv-story').show();
             }
