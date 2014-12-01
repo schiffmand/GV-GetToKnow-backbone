@@ -45,6 +45,7 @@ var SplashView = Backbone.View.extend({
         $.ajax({
             url: 'http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(rssUrl),
             dataType: 'json',
+            //changed for 6 stories on the homepage, feed for 6 and 6 div calls
             success: function(data) {
                 stories = _.first(data.responseData.feed.entries,6);
                 $('#gv-country').attr('disabled', false);
