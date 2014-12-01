@@ -7,17 +7,17 @@ var SplashView = Backbone.View.extend({
     events: {
       "change #gv-country":    "lookupCountry",
     },
-    
+
     initialize: function(){
         this.loadCountryData();
         this.render();
     },
-     
+
     // render the whole app
     render: function(){
         $(this.el).load("templates/app.template");
     },
-    
+
     // load up the list of GV countries and urls
     loadCountryData: function(){
         var that = this;
@@ -25,7 +25,7 @@ var SplashView = Backbone.View.extend({
             that.countryToPath = data;
         });
     },
-    
+
     // if the country is a valid one, update the map and content
     lookupCountry: function(){
         var currentCountry = $('#gv-country').val();
@@ -46,12 +46,14 @@ var SplashView = Backbone.View.extend({
             url: 'http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(rssUrl),
             dataType: 'json',
             success: function(data) {
-                stories = _.first(data.responseData.feed.entries,4);
+                stories = _.first(data.responseData.feed.entries,6);
                 $('#gv-country').attr('disabled', false);
                 that.updateOneStory(stories[0], '#gv-story-1');
                 that.updateOneStory(stories[1], '#gv-story-2');
                 that.updateOneStory(stories[2], '#gv-story-3');
-                that.updateOneStory(stories[2], '#gv-story-4');
+                that.updateOneStory(stories[3], '#gv-story-4');
+                that.updateOneStory(stories[4], '#gv-story-5');
+                that.updateOneStory(stories[5], '#gv-story-6');
                 $('#gv-loading').hide();
                 $('.gv-story').show();
             }
@@ -61,14 +63,14 @@ var SplashView = Backbone.View.extend({
     // update the teaser for one story
     updateOneStory:function(story, dest){
         $(dest).empty();
-        $.ajax({url:"templates/story.template", 
+        $.ajax({url:"templates/story.template",
               type: "GET",
               dataType: "text",
               success: function(content){
                 $(dest).html(_.template(content, {
                     link: story.link,
-                    title: story.title, 
-                    author: story.author, 
+                    title: story.title,
+                    author: story.author,
                     contentSnippet: story.contentSnippet
                     }));
             }});
@@ -86,7 +88,7 @@ var SplashView = Backbone.View.extend({
             }
           });
     }
-    
+
 
 });
 
